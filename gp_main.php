@@ -12,7 +12,7 @@ switch($type) {
 case Wechat::MSGTYPE_TEXT:
     $action = new gpAction();
     $responseStr = $action->process($content);
-    $weObj->text("hello, ".$responseStr)->reply();
+    $weObj->text($responseStr)->reply();
     exit;
     break;
 case Wechat::MSGTYPE_EVENT:
@@ -45,7 +45,7 @@ class gpAction
         $helpMsg = "输入一下命令:\n".
             "CXZW 作物名:查询作物信息\n".
             "CXZX :查询资讯\n".
-            "CXZX 城市:查询天气\n";
+            "CXTQ 城市:查询天气\n";
         return $helpMsg;
     }
 
@@ -65,7 +65,7 @@ class gpAction
 
     public function queryWeather($name)
     {
-        $command = "python2 crawler/weather.com.cn.py ".$name;
+        $command = "python2 crawler/weather.com.cn.py ".$name." 2>&1";
         $msg = shell_exec($command);
         return $msg;
     }
@@ -77,13 +77,28 @@ class gpAction
         if(strtoupper($arr[0]) == 'CXZW')
         {
             //maximum length in wechat:2048
-            $msg .= substr($this->queryCrop($arr[1]),0,1024);
+            if(sizeof($arr) >= 2)
+            {
+                $msg .= substr($this->queryCrop($arr[1]),0,1024);
+            }
+            else
+            {
+                $msg .= 'Please input the crop name!';
+            }
         }else if(strtoupper($arr[0]) == 'CXZX')
         {
-            $msg .= '最新资讯:';
+            $msg .= '最新资讯:'.
+                $this->queryNews();
         }else if (strtoupper($arr[0]) == 'CXTQ')
         {
-            $msg .= '天气: ';
+            if (sizeof($arr) >=2)
+            {
+                $msg .= $arr[1].'天气: ';
+                $msg .=
+                    $this->queryWeather($arr[1]);
+            }else{
+                $msg ="请输入要查询天气的城市";
+            }
         }else
         {
             $msg .= $this->help();

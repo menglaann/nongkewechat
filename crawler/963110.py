@@ -65,6 +65,41 @@ def extract_article(page):
     return unicode(article).encode("utf-8")
     # print unicode(article)
 
+def get_latest_news():
+    req = urllib2.urlopen(url_news)
+    page = req.read()
+    results = extract_news(page)
+    for result in results:
+        #dump2file(result+"\n","/tmp/log","a+")
+        dump2file((str(result)+"\n"),"/tmp/log","a+")
+    return results
+
+def extract_news(page):
+    if page is None:
+        return None
+    # build soup data structure of the page
+    soup = BeautifulSoup(page)
+    tag_ul = soup.find("ul",{"class":"list lh24 f14"})
+    tags_li = tag_ul.find_all("li")
+    results = []
+    # time format codes according to "time" library
+    time_format = "%Y-%m-%d %H:%M:%S"
+    day_format = "%Y-%m-%d"
+    date_day = time.strftime(day_format,time.localtime())
+    for tag_li in tags_li:
+        #print tag_li
+        try:
+            tag_span = tag_li.find("span")
+            str_time = tag_span.get_text()
+            time_stmp = time.strptime(str_time,time_format)
+            tag_date = time.strftime(day_format,time_stmp)
+            print tag_date,date_day
+            if tag_date == date_day:
+                results.append(repr(tag_li.find("a")))
+            print tag_li.find("a")
+        except BaseException as e:
+            print e
+    return results
 
 def dump2file(data, filename, mode="w"):
     if data is not None and filename is not None:
@@ -76,4 +111,7 @@ def dump2file(data, filename, mode="w"):
 # print(unicode(sys.argv[1]).encode("utf-8"))
 # print(sys.argv[1])
 # print("你好")
-print query_crop(sys.argv[1])
+if sys.argv[0] == 'news':
+    print get_latest_new()
+else:
+    print query_crop(sys.argv[1])
