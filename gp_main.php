@@ -1,8 +1,8 @@
 <?php
 include "wechat.class.php";
 $options = array(
-    'token'=>'tokenaccesskey', //填写你设定的key
-    'encodingaeskey'=>'encodingaeskey' //填写加密用的EncodingAESKey，如接口为明文模式可忽略
+    'token'=>'weixin', //填写你设定的key
+    'encodingaeskey'=>'jmQv0VM4MJbEEIVWeh1oB0xPAvBznqmuQDeUJqFmXG4' //填写加密用的EncodingAESKey，如接口为明文模式可忽略
 );
 $weObj = new Wechat($options);
 //$weObj->valid();//明文或兼容模式可以在接口验证通过后注释此句，但加密模式一定不能注释，否则会验证失败
@@ -44,13 +44,28 @@ class gpAction
     {
         $helpMsg = "输入一下命令:\n".
             "CXZW 作物名:查询作物信息\n".
-            "CXZX :查询资讯";
+            "CXZX :查询资讯\n".
+            "CXZX 城市:查询天气\n";
         return $helpMsg;
     }
 
     public function queryCrop($name)
     {
-        $command = "python2 963110.py ".$name;
+        $command = "python2 crawler/963110.py ".$name;
+        $msg = shell_exec($command);
+        return $msg;
+    }
+
+    public function queryNews()
+    {
+        $command = "python2 crawler/963110.py ".$name;
+        $msg = shell_exec($command);
+        return $command;
+    }
+
+    public function queryWeather($name)
+    {
+        $command = "python2 crawler/weather.com.cn.py ".$name;
         $msg = shell_exec($command);
         return $msg;
     }
@@ -58,19 +73,20 @@ class gpAction
     public function parseArg($msg)
     {
         $arr = preg_split('/\s+/',$msg);
-        $msg = '';
-        if($arr[0] == 'CXZW')
+        $msg = '您好，';
+        if(strtoupper($arr[0]) == 'CXZW')
         {
-            $msg = $this->queryCrop($arr[1]);
-        }else if($arr[0] == 'CXZX')
+            //maximum length in wechat:2048
+            $msg .= substr($this->queryCrop($arr[1]),0,1024);
+        }else if(strtoupper($arr[0]) == 'CXZX')
         {
-            $msg = '最新资讯:';
-        }else if ($arr[0] == 'CXTQ')
+            $msg .= '最新资讯:';
+        }else if (strtoupper($arr[0]) == 'CXTQ')
         {
-            $msg = '天气: ';
+            $msg .= '天气: ';
         }else
         {
-            $msg = $this.help();
+            $msg .= $this->help();
         }
         return $msg;
     }
