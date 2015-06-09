@@ -60,7 +60,8 @@ class gpAction
     {
         $command = "python2 crawler/963110.py ".$name;
         $msg = shell_exec($command);
-        return $command;
+        return "<a href=\"http://weibo.com/\">weibo</a";
+        //return $command;
     }
 
     public function queryWeather($name)
@@ -100,9 +101,9 @@ class gpAction
                 $msg ="请输入要查询天气的城市";
             }
         }else
-        {
-            $msg .= $this->help();
-        }
+            {
+                $msg .= $this->help();
+            }
         return $msg;
     }
 
