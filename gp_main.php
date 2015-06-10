@@ -63,7 +63,7 @@ class gpAction
 
     public function queryNews()
     {
-	$command = "python2 crawler/963110.py news";
+        $command = "python2 crawler/963110.py news";
         $msg = shell_exec($command);
         return '[{"url": "http://www.963110.com.cn/wcm/index.php?m=content&c=index&a=show&catid=7&id=6463", "text": "\u6d77\u53e3\u5b89\u63922600\u4e07\u5143\u63a8\u8fdb\u201c\u83dc\u7bee\u5b50\u201d\u6d41\u901a\u4f18\u5316\u5efa\u8bbe\u5de5\u7a0b"}, {"url": "http://www.963110.com.cn/wcm/index.php?m=content&c=index&a=show&catid=7&id=6462", "text": "\u6b63\u5b97\u5b9a\u5b89\u7cbd\u5b50\u6709\u201c\u62a4\u8eab\u7b26\u201d\u4e86"}, {"url": "http://www.963110.com.cn/wcm/index.php?m=content&c=index&a=show&catid=7&id=6457", "text": "\u6d77\u5357\u7cbd\u8ba9\u6e38\u5ba2\u54c1\u5c1d\u7279\u8272\u201c\u7aef\u5348\u5473\u201d"}, {"url": "http://www.963110.com.cn/wcm/index.php?m=content&c=index&a=show&catid=7&id=6456", "text": "\u6d77\u5357\u98df\u54c1\u9700\u6811\u597d\u4ea7\u54c1\u5f62\u8c61"}, {"url": "http://www.963110.com.cn/wcm/index.php?m=content&c=index&a=show&catid=7&id=6455", "text": "\u4e09\u4e9a\u6253\u51fb\u519c\u6751\u8fdd\u5efa\u201c\u91cd\u707e\u533a\u201d"}, {"url": "http://www.963110.com.cn/wcm/index.php?m=content&c=index&a=show&catid=7&id=6454", "text": "\u510b\u5dde\uff1a\u98ce\u60c5\u4e07\u201c\u7cbd\u201d\u9999\u715e\u4eba"}, {"url": "http://www.963110.com.cn/wcm/index.php?m=content&c=index&a=show&catid=7&id=6453", "text": "\u5927\u4e2d\u578b\u6e14\u8239\u6d77\u4e0a\u53ef\u770b58\u5957\u7535\u89c6\u8282\u76ee"}]';
     }
@@ -99,11 +99,10 @@ class gpAction
             $i = 0;
             foreach($jfo as $j)
             {
-            //$this->weObj->text($j->url)->reply();
                 $arr = array(
                     'Title'=>$j->text,
                     'Description'=>utf8_encode($j->text),
-                    //'PicUrl'=>"http://www.963110.com.cn/",
+                    'PicUrl'=>"http://www.963110.com.cn/images/logo.jpg",
                     'Url'=>$j->url,
                 );
                 $i_str = (string)$i;
@@ -111,14 +110,6 @@ class gpAction
                 $i = $i + 1;
             }
             $this->weObj->news($arrs)->reply();
-            //$this->weObj->news(array(
-            //"0"=>array(
-            //'Title'=>'msg title',
-            //'Description'=>'summary text',
-            //'PicUrl'=>'http://www.domain.com/1.jpg',
-            //'Url'=>'http://www.domain.com/1.html'
-            //)
-            //))->reply();
         }else if (strtoupper($arr[0]) == 'CXTQ')
         {
             if (sizeof($arr) >=2)
