@@ -65,8 +65,8 @@ class gpAction
     {
         $command = "python2 crawler/963110.py ".$name;
         $msg = shell_exec($command);
-        return "<a href=\"http://weibo.com/\">weibo</a";
-        //return $command;
+        //return "<a href=\"http://weibo.com/\">weibo</a";
+        return $msg;
     }
 
     public function queryWeather($name)
