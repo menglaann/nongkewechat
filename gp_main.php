@@ -96,7 +96,14 @@ class gpAction
         {
             $msgs .= '最新资讯:'.
                 $this->queryNews();
-            $this->weObj->news(json_decode($msgs))->reply();
+            $this->weObj->news(array(
+                "0"=>array(
+                    'Title'=>'msg title',
+                    'Description'=>'summary text',
+                    'PicUrl'=>'http://www.domain.com/1.jpg',
+                    'Url'=>'http://www.domain.com/1.html'
+                )
+            ))->reply();
         }else if (strtoupper($arr[0]) == 'CXTQ')
         {
             if (sizeof($arr) >=2)
