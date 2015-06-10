@@ -169,8 +169,11 @@ def parse_city_detail(html):
     info = json.loads(weather_info)
     # print "json: ", info['weatherinfo']['city']
     try:
-        weather_info_zh = weather_info.replace("weatherinfo", "天气信息").replace("cityname", "城市名").replace(
-            "tempn", "温度").replace("weather", "天气").replace("tianqicode", "天气码").replace("wd", "风向").replace("ws", "风级")
+        # modify the longer string field first,and then the contained substring
+        # field
+        weather_info_zh = weather_info.replace("weathercode", "天气码").replace(
+            "weatherinfo", "天气信息").replace("cityname", "城市名") .replace(
+                "city", "城市").replace("temp", "温度").replace("weather", "天气").replace("wd", "风向").replace("ws", "风级")
         return weather_info_zh
     except:
         return weather_info
