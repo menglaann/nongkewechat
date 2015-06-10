@@ -169,8 +169,8 @@ def parse_city_detail(html):
     info = json.loads(weather_info)
     # print "json: ", info['weatherinfo']['city']
     try:
-        weather_info_zh = weather_info.replace("weatherinfo", "tianqixinxi").replace("cityname", "chengshiming").replace(
-            "tempn", "wendu").replace("weather", "tianqi").replace("tianqicode", "tianqima").replace("wd", "fengxiang").replace("ws", "fengji")
+        weather_info_zh = weather_info.replace("天气信息", "tianqixinxi").replace("城市名称", "chengshiming").replace(
+            "温度", "wendu").replace("天气", "tianqi").replace("天气码", "tianqima").replace("风向", "fengxiang").replace("风级", "fengji")
         return weather_info_zh
     except:
         return weather_info
