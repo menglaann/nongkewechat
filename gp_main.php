@@ -10,9 +10,9 @@ $type = $weObj->getRev()->getRevType();
 $content = $weObj->getRev()->getRevContent();
 switch($type) {
 case Wechat::MSGTYPE_TEXT:
-    $action = new gpAction();
+    $action = new gpAction($weObj);
     $responseStr = $action->process($content);
-    $weObj->news($responseStr)->reply();
+    //$weObj->news($responseStr)->reply();
     exit;
     break;
 case Wechat::MSGTYPE_EVENT:
@@ -20,11 +20,16 @@ case Wechat::MSGTYPE_EVENT:
 case Wechat::MSGTYPE_IMAGE:
     break;
 default:
-    $weObj->text("help info")->reply();
+    $weObj->text("welcome")->reply();
 }
 
 class gpAction
 {
+    public function __construct($weObj)
+    {
+        $this->weObj = $weObj;
+    }
+
     public function valid()
     {
         $echoStr = $_GET["echostr"];
@@ -86,10 +91,12 @@ class gpAction
             {
                 $msg .= 'Please input the crop name!';
             }
+            $this->weObj->text($msg)->reply();
         }else if(strtoupper($arr[0]) == 'CXZX')
         {
-            $msg .= '最新资讯:'.
+            $msgs .= '最新资讯:'.
                 $this->queryNews();
+            $this->weObj->news(json_decode($msgs))->reply();
         }else if (strtoupper($arr[0]) == 'CXTQ')
         {
             if (sizeof($arr) >=2)
@@ -100,9 +107,11 @@ class gpAction
             }else{
                 $msg ="请输入要查询天气的城市";
             }
+            $this->weObj->text($msg)->reply();
         }else
             {
                 $msg .= $this->help();
+                $this->weObj->text($msg)->reply();
             }
         return $msg;
     }
