@@ -123,7 +123,7 @@ def dump2file(data, filename, mode="w"):
 # print(unicode(sys.argv[1]).encode("utf-8"))
 # print(sys.argv[1])
 # print("你好")
-if sys.argv[1] == 'news':
+if len(sys.argv) > 1 and sys.argv[1] == 'news':
     print get_latest_news()
 else:
     print query_crop(sys.argv[1])

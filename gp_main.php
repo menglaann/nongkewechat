@@ -94,16 +94,30 @@ class gpAction
             $this->weObj->text($msg)->reply();
         }else if(strtoupper($arr[0]) == 'CXZX')
         {
-            $msgs .= '最新资讯:'.
-                $this->queryNews();
-            $this->weObj->news(array(
-                "0"=>array(
-                    'Title'=>'msg title',
-                    'Description'=>'summary text',
-                    'PicUrl'=>'http://www.domain.com/1.jpg',
-                    'Url'=>'http://www.domain.com/1.html'
-                )
-            ))->reply();
+            $msgs = $this->queryNews();
+            $news = json_decode($msgs);
+            $arrs = array();
+            $i = 0;
+            foreach($news as $a_news)
+            {
+                $arr = array(
+                    'Title'=>'News',
+                    'Description'=>$a_news->text,
+                    'PicUrl'=>"http://www.963110.com.cn/",
+                    'Url'=>$a_news->url,
+                );
+                array_push($arrs,array(string($i)=>$arr));
+                $i = $i + 1;
+            }
+            $this->weObj->news($arrs)->reply();
+            //$this->weObj->news(array(
+            //"0"=>array(
+            //'Title'=>'msg title',
+            //'Description'=>'summary text',
+            //'PicUrl'=>'http://www.domain.com/1.jpg',
+            //'Url'=>'http://www.domain.com/1.html'
+            //)
+            //))->reply();
         }else if (strtoupper($arr[0]) == 'CXTQ')
         {
             if (sizeof($arr) >=2)
