@@ -12,7 +12,7 @@ switch($type) {
 case Wechat::MSGTYPE_TEXT:
     $action = new gpAction();
     $responseStr = $action->process($content);
-    $weObj->text($responseStr)->reply();
+    $weObj->news($responseStr)->reply();
     exit;
     break;
 case Wechat::MSGTYPE_EVENT:
