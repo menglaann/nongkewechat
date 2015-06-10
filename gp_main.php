@@ -56,14 +56,14 @@ class gpAction
 
     public function queryCrop($name)
     {
-        $command = "python2 crawler/963110.py ".$name;
+        $command = "python2 crawler/963110.py crop ".$name;
         $msg = shell_exec($command);
         return $msg;
     }
 
     public function queryNews()
     {
-        $command = "python2 crawler/963110.py ".$name;
+        $command = "python2 crawler/963110.py news";
         $msg = shell_exec($command);
         //return "<a href=\"http://weibo.com/\">weibo</a";
         return $msg;

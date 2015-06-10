@@ -22,7 +22,10 @@
 $json_file = file_get_contents('sample/news.json');
 
 // convert string to json
-$jfo = json_decode($json_file);
+//$jfo = json_decode($json_file);
+$command = "python2 crawler/963110.py news";
+$jfo = shell_exec($command);
+
 
 // read the value
 foreach ($jfo as $i) {
