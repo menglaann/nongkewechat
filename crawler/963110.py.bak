@@ -25,7 +25,7 @@ def query_crop(name=""):
         data = {"searchtext": "", "full": "1"}
         data["searchtext"] = name
         payload = urllib.urlencode(data)
-        # print "payload: " + payload
+        #print("request: " + url_search + "?"+payload)
         req = urllib2.urlopen(url_search, payload)
         line = req.read()
         # dump2file(line, "query.log")
