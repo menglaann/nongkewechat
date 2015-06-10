@@ -1,6 +1,7 @@
 
 # -*- coding:utf-8 -*-
 
+import json
 import urllib
 import urllib2
 import sys
@@ -126,7 +127,7 @@ def dump2file(data, filename, mode="w"):
 if len(sys.argv) > 1:
     try:
         if sys.argv[1] == 'news':
-            print get_latest_news()
+            print json.dumps(get_latest_news())
         else:
             print query_crop(sys.argv[2])
     except:
