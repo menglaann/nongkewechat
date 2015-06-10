@@ -26,10 +26,25 @@ $jfo = json_decode($json_file);
 
 // read the value
 foreach ($jfo as $i) {
-    echo $i->url."\t".$i->text."\n";
+    //echo $i->url."\t".$i->text."\n";
 }
 
+$arrs = array();
+$i = 0;
+foreach($jfo as $j)
+{
+    $arr = array(
+        'Title'=>'News',
+        'Description'=>$j->text,
+        'PicUrl'=>"http://www.963110.com.cn/",
+        'Url'=>$j->url,
+    );
+    $i_str = (string)$i;
+    array_push($arrs,array($i_str=>$arr));
+    $i = $i + 1;
+}
 
+var_dump($arrs);
 
 
 ?>

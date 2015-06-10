@@ -98,15 +98,16 @@ class gpAction
             $news = json_decode($msgs);
             $arrs = array();
             $i = 0;
-            foreach($news as $a_news)
+            foreach($news as $j)
             {
                 $arr = array(
                     'Title'=>'News',
-                    'Description'=>$a_news->text,
+                    'Description'=>$j->text,
                     'PicUrl'=>"http://www.963110.com.cn/",
-                    'Url'=>$a_news->url,
+                    'Url'=>$j->url,
                 );
-                array_push($arrs,array(string($i)=>$arr));
+                $i_str = (string)$i;
+                array_push($arrs,array($i_str=>$arr));
                 $i = $i + 1;
             }
             $this->weObj->news($arrs)->reply();
