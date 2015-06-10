@@ -1,35 +1,13 @@
 <?php
 
-//include"gp_main.php";
-//$gp_action = new gpAction();
-//echo $gp_action->queryNews();
-//$msgs = $gp_action->queryNews();
-//$news = json_decode($msgs);
-//$arrs = array();
-//foreach($news as $a_news)
-//{
-//$arr = array(
-//'Title'=>'News',
-//'Description'=>$a_news->text,
-//'PicUrl'=>"http://www.963110.com.cn/",
-//'Url'=>$a_news->url,
-//);
-//array_push($arrs,$arr);
-//}
-//echo var_dump($arrs);
-
 // copy file content
-$json_file = file_get_contents('sample/news.json');
+//$json_file = file_get_contents('sample/news.json');
 
 // convert string to json
 //$jfo = json_decode($json_file);
 $command = "python2 crawler/963110.py news";
 $msg = shell_exec($command);
 $jfo = json_decode($msg);
-// read the value
-//foreach ($jfo as $i) {
-//echo $i->url."\t".$i->text."\n";
-//}
 
 $arrs = array();
 $i = 0;
@@ -45,6 +23,23 @@ foreach($jfo as $j)
     array_push($arrs,array($i_str=>$arr));
     $i = $i + 1;
 }
+
+var_dump($arrs);
+
+$arrs = array(
+            "0"=>array(
+            'Title'=>'msg title',
+            'Description'=>'summary text',
+            'PicUrl'=>'http://www.domain.com/1.jpg',
+            'Url'=>'http://www.domain.com/1.html'
+            ),
+"1"=>array(
+            'Title'=>'msg title',
+            'Description'=>'summary text',
+            'PicUrl'=>'http://www.domain.com/1.jpg',
+            'Url'=>'http://www.domain.com/1.html'
+            )
+            );
 
 var_dump($arrs);
 
