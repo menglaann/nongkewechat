@@ -130,6 +130,7 @@ if len(sys.argv) > 1:
             print json.dumps(get_latest_news())
         else:
             print query_crop(sys.argv[2])
-    except:
+    except Exception, e:
+        print e
         print "ERROR!"
         pass
