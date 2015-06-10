@@ -26,7 +26,6 @@ $json_file = file_get_contents('sample/news.json');
 $command = "python2 crawler/963110.py news";
 $msg = shell_exec($command);
 $jfo = json_decode($msg);
-var_dump( $jfo);
 // read the value
 //foreach ($jfo as $i) {
 //echo $i->url."\t".$i->text."\n";

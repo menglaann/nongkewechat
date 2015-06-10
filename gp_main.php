@@ -95,10 +95,10 @@ class gpAction
         }else if(strtoupper($arr[0]) == 'CXZX')
         {
             $msgs = $this->queryNews();
-            $news = json_decode($msgs);
+            $jfo = json_decode($msgs);
             $arrs = array();
             $i = 0;
-            foreach($news as $j)
+            foreach($jfo as $j)
             {
                 $arr = array(
                     'Title'=>'News',
