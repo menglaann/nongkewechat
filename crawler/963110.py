@@ -6,7 +6,10 @@ import urllib2
 import time
 import sys
 import json
-from bs4 import BeautifulSoup
+try:
+    from bs4 import BeautifulSoup
+except:
+    from BeautifulSoup import BeautifulSoup
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
